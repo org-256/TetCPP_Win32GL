@@ -17,8 +17,6 @@ Game::Game()
 	running = true;
 	srand(timer.GetTicks());
 
-	isFresh = true;
-	isGameOver = false;
 	New();
 }
 
@@ -29,6 +27,7 @@ Game::~Game()
 
 void Game::New()
 {
+	isFresh = true;	
 	isGameOver = false;
 	isFastDrop = false;
 	current.Rand();
@@ -108,7 +107,6 @@ void Game::Draw()
 
 	DrawRect(x, y+BLOCK_SIZE/4, (r-l+1)*BLOCK_SIZE, BLOCK_SIZE/1.6, defColors[C_YELLOW]);
 }
-#define VK_PRESSED (1<<7)
 
 bool KeyPressed(byte* keys, byte key)
 {
@@ -142,6 +140,8 @@ void Game::ProcessInput(KeyState *keys)
 				SlideLeft(current,stakan);
 			else
 				TryMoveLeft(current,stakan);
+			
+			
 		}
 
 		if(KeyPressed(keys, VK_RIGHT))
@@ -156,15 +156,21 @@ void Game::ProcessInput(KeyState *keys)
 				SlideRight(current,stakan);
 			else		
 				TryMoveRight(current,stakan);
+			
+			
 		}
 
-		if(KeyPressed(keys, VK_UP))	
+		if(KeyPressed(keys, VK_UP))
+		{
 			TryTurnLeft(current,stakan);
+			
+		}
 		
 		if(KeyPressed(keys, VK_DOWN))	
 		{		
 			isFastDrop = true;
 			beforeFall = GenDifficulty();
+			
 		}
 	}
 			
@@ -172,8 +178,7 @@ void Game::ProcessInput(KeyState *keys)
 	if(KeyPressed(keys, VK_F2))	
 		New();
 	
-	for(int i=0;i<255;i++)
-			keys[i]=0;
+	memset(keys,0,sizeof(KeyState)*256);	//keys are processed so clean states
 
 }
 

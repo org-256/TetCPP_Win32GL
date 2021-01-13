@@ -90,7 +90,7 @@ void Figure::TurnRight()
 void Figure::Rand()
 {
 	
-	figID = rand()%7;
+	figID = (byte)(rand()%7);
 
 	for(int i=0;i<4;i++)
 	{
@@ -108,7 +108,7 @@ void Figure::SetPos(int x, int y)
 
 void Figure::Set(Figs id)
 {
-	figID = id;
+	figID = (byte)id;
 	for(int i=0;i<4;i++)
 	{
 		blk[i].x = src_blk[figID][i].x;
